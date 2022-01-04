@@ -1,0 +1,100 @@
+
+plugins {
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'java-library'
+}
+
+allprojects {
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            credentials {
+                username '5f8e46c1a3bcee4a48af04be'
+                password '7)ub4F5lEj]H'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2042787-release-VdRCVN/'
+        }
+        maven {
+            credentials {
+                username '5f8e46c1a3bcee4a48af04be'
+                password '7)ub4F5lEj]H'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2042787-snapshot-IpIkXm/'
+        }
+    }
+}
+
+group = 'cn.metaq.boot'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+ext {
+    set('springCloudAlibabaVersion','2.1.2.RELEASE')
+    set('springBootVersion', '2.1.4.RELEASE')
+    set('metaqVersion', '1.0-SNAPSHOT')
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'cn.metaq:metaq-common-util'
+    implementation 'cn.metaq:metaq-common-web-biz'
+    implementation 'com.github.paulosalonso:spel-builder:1.1.3-SNAPSHOT'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+//    testImplementation 'junit:junit'
+}
+
+dependencyManagement{
+    imports {
+        mavenBom "cn.metaq:metaq-dependencies:${metaqVersion}"
+    }
+    resolutionStrategy {
+        cacheChangingModulesFor 0, 'seconds'
+    }
+}
+
+// 清除现有的lib目录
+task clearJar(type: Delete) {
+    delete project.buildDir.path + File.separator + "libs" + File.separator + "lib"
+}
+
+// 将依赖包复制到lib目录
+task copyJar(type: Copy, dependsOn: 'clearJar') {
+    from configurations.runtimeClasspath
+    into project.buildDir.path + File.separator + "libs" + File.separator + "lib"
+}
+
+bootJar {
+    archivesBaseName = "app"
+    archiveVersion = ""
+    excludes = ["*.jar", "application.yml", "application.properties"]
+    dependsOn clearJar
+    dependsOn copyJar
+    manifest {
+        attributes "Manifest-Version": 1.0,
+                'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' ')
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

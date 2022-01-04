@@ -1,0 +1,36 @@
+{
+  "type": "AND",
+  "group": false,
+  "list": [
+    {
+      "type": "METH",
+      "ref": "var1",
+      "name": "m1",
+      "parameters": [
+        {
+          "name": "arg0",
+          "index": 0
+        },
+        {
+          "name": "arg1",
+          "index": 2
+        }
+      ]
+    },
+    {
+      "type": "METH",
+      "ref": "var1",
+      "name": "m2",
+      "parameters": [
+        {
+          "name": "arg0",
+          "index": 0
+        },
+        {
+          "name": "arg1",
+          "index": 2
+        }
+      ]
+    }
+  ]
+}
