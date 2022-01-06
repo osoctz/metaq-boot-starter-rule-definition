@@ -2,8 +2,10 @@ package cn.metaq.boot.rule.def.jackson.databind;
 
 import cn.metaq.boot.rule.def.constants.OpType;
 import cn.metaq.boot.rule.def.model.dto.LogicalDefinition;
+import cn.metaq.boot.rule.def.model.dto.MapParameterDefinition;
 import cn.metaq.boot.rule.def.model.dto.MethodDefinition;
 import cn.metaq.boot.rule.def.model.dto.ModelDefinition;
+import cn.metaq.boot.rule.def.model.dto.ParameterDefinition;
 import cn.metaq.boot.rule.def.model.dto.TernaryDefinition;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -34,8 +36,17 @@ public class ModelDefDeserializer extends JsonDeserializer<ModelDefinition> {
       case TERN:
         def = mapper.readValue(json, TernaryDefinition.class);
         break;
-      default:
+      case MAP:
+        def = mapper.readValue(json, MapParameterDefinition.class);
+        break;
+      case METH:
         def = mapper.readValue(json, MethodDefinition.class);
+        break;
+      case VAR:
+        def = mapper.readValue(json, ParameterDefinition.class);
+        break;
+      default:
+        def = mapper.readValue(json, ParameterDefinition.class);
     }
     return def;
   }

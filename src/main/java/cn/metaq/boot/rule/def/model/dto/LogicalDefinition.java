@@ -11,7 +11,7 @@ public class LogicalDefinition implements ModelDefinition {
 
   protected OpType type = OpType.AND;
 
-  private Boolean group = Boolean.FALSE;
+  private Boolean group = Boolean.TRUE;
 
   @JsonDeserialize(using = ModelDefListDeserializer.class)
   private List<ModelDefinition> list;

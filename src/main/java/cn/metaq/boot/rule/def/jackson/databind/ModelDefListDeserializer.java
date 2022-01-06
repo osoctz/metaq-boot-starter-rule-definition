@@ -2,8 +2,10 @@ package cn.metaq.boot.rule.def.jackson.databind;
 
 import cn.metaq.boot.rule.def.constants.OpType;
 import cn.metaq.boot.rule.def.model.dto.LogicalDefinition;
+import cn.metaq.boot.rule.def.model.dto.MapParameterDefinition;
 import cn.metaq.boot.rule.def.model.dto.MethodDefinition;
 import cn.metaq.boot.rule.def.model.dto.ModelDefinition;
+import cn.metaq.boot.rule.def.model.dto.ParameterDefinition;
 import cn.metaq.boot.rule.def.model.dto.TernaryDefinition;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 
 public class ModelDefListDeserializer extends JsonDeserializer<List<ModelDefinition>> {
 
@@ -43,8 +46,17 @@ public class ModelDefListDeserializer extends JsonDeserializer<List<ModelDefinit
           case TERN:
             def = mapper.readValue(json, TernaryDefinition.class);
             break;
-          default:
+          case MAP:
+            def = mapper.readValue(json, MapParameterDefinition.class);
+            break;
+          case METH:
             def = mapper.readValue(json, MethodDefinition.class);
+            break;
+          case VAR:
+            def = mapper.readValue(json, ParameterDefinition.class);
+            break;
+          default:
+            def = mapper.readValue(json, ParameterDefinition.class);
         }
 
         defs.add(def);
