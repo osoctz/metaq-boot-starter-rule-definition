@@ -6,28 +6,6 @@ plugins {
     id 'java-library'
 }
 
-allprojects {
-    repositories {
-        maven {
-            url 'https://maven.aliyun.com/repository/public'
-        }
-        maven {
-            credentials {
-                username '5f8e46c1a3bcee4a48af04be'
-                password '7)ub4F5lEj]H'
-            }
-            url 'https://packages.aliyun.com/maven/repository/2042787-release-VdRCVN/'
-        }
-        maven {
-            credentials {
-                username '5f8e46c1a3bcee4a48af04be'
-                password '7)ub4F5lEj]H'
-            }
-            url 'https://packages.aliyun.com/maven/repository/2042787-snapshot-IpIkXm/'
-        }
-    }
-}
-
 group = 'cn.metaq.boot'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
